@@ -18,46 +18,24 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
             </div>
             <div class="col-lg-12 col-md-8 h-100">
                 <div class="service">
-                    <form method="post" action="/users">
+                    <form method="post" action="/reserdawtions">
                         <div class="mb-3">
-                            <label class="form-label" for="user">Nick de usuario</label>
-                            <input class="form-control" id="user" name="usernick" type="text">
+                            <label class="form-label" for="bookingdate">Fecha de la reserva</label>
+                            <input class="form-control" id="bookingdate" name="bookingdate" type="text">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="dni">DNI del usuario</label>
-                            <input class="form-control" id="dni" name="userdni" type="text">
+                            <label class="form-label" for="bookingunits">Cantidad de personas</label>
+                            <input class="form-control" id="bookingunits" name="bookingunits" type="number">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="name">Nombre de usuario</label>
-                            <input class="form-control" id="name" name="username" type="text">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="surname">Apellidos de usuario</label>
-                            <input class="form-control" id="surname" name="usersurname" type="text">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="pass">Contraseña</label>
-                            <input class="form-control" id="pass" name="userpass" type="password">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="email">Correo electrónico</label>
-                            <input class="form-control" id="email" name="useremail" type="email">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="birthdate">Fecha de nacimiento</label>
-                            <input class="form-control" id="birthdate" name="userbirthdate" type="text">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="adress">Dirección</label>
-                            <input class="form-control" id="adress" name="useradress" type="text">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="phone">Teléfono de contacto</label>
-                            <input class="form-control" id="phone" name="userphone" type="tel">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="altphone">Teléfono alternativo</label>
-                            <input class="form-control" id="altphone" name="useraltphone" type="tel">
+                            <label class="form-label" for="name">Método de pago</label>
+                            <select>
+                                <option>PayPal</option>
+                                <option>Apple Pay</option>
+                                <option>Google Pay</option>
+                                <option>Tarjeta de crédito</option>
+                                <option>Bizum</option>
+                            </select>
                         </div>
                         <input class="btn btn-brand ms-lg-3" value="Enviar" type="submit">
                     </form>
