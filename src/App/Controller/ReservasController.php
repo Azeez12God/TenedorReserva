@@ -10,12 +10,12 @@ class ReservasController implements InterfaceController
 {
     //GET /bookings
     public function index($api){
-        include_once "../View/Booking/indexBooking.php";
+        include_once  __DIR__ . "/../View/Booking/indexBooking.php";
     }
 
     //GET /bookings/create
     public function create($api){
-        include_once "../View/Booking/createBooking.php";
+        include_once __DIR__ . "/../View/Booking/createBooking.php";
     }
 
     //POST /bookings
