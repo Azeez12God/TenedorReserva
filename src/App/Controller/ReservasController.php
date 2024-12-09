@@ -15,9 +15,7 @@ class ReservasController implements InterfaceController
 
     //GET /bookings/create
     public function create($api){
-        //Aquí mostraríamos el formulario de registro
-        echo "Formulario de registro de una reserva";
-
+        include_once "../View/Booking/createBooking.php";
     }
 
     //POST /bookings
