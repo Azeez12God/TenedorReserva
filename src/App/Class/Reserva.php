@@ -9,115 +9,113 @@ use DateTime;
 
 class Reserva
 {
-    private string $uuid;
-    private Usuario $usuario;
-    private DateTime $fecha;
-    private int $unidades;
-    private float $coste;
-    private Cliente $cliente;
-    private MetodoPago $metodoPago;
-    private int $numCambios;
+    private string $bookinguuid;
+    private Usuario $useruuid;
+    private DateTime $bookingdate;
+    private int $bookingunits;
+    private float $bookingcost;
+    private Cliente $clientcode;
+    private MetodoPago $bookingpaymethod;
+    private int $bookingchanges;
 
-    public function __construct(string $uuid)
+    /**
+     * @param string $bookinguuid
+     */
+    public function __construct(string $bookinguuid)
     {
-        $this->uuid=$uuid;
-
+        $this->bookinguuid = $bookinguuid;
     }
 
-    public function getUuid(): string
+    public function getBookinguuid(): string
     {
-        return $this->uuid;
+        return $this->bookinguuid;
     }
 
-    public function setUuid(string $uuid): Reserva
+    public function setBookinguuid(string $bookinguuid): void
     {
-        $this->uuid = $uuid;
-        return $this;
+        $this->bookinguuid = $bookinguuid;
     }
 
-    public function getUsuario(): Usuario
+    public function getUseruuid(): \App\Class\Usuario
     {
-        return $this->usuario;
+        return $this->useruuid;
     }
 
-    public function setUsuario(Usuario $usuario): Reserva
+    public function setUseruuid(\App\Class\Usuario $useruuid): void
     {
-        $this->usuario = $usuario;
-        return $this;
+        $this->useruuid = $useruuid;
     }
 
-    public function getFecha(): DateTime
+    public function getBookingdate(): DateTime
     {
-        return $this->fecha;
+        return $this->bookingdate;
     }
 
-    public function setFecha(DateTime $fecha): Reserva
+    public function setBookingdate(DateTime $bookingdate): void
     {
-        $this->fecha = $fecha;
-        return $this;
+        $this->bookingdate = $bookingdate;
     }
 
-    public function getUnidades(): int
+    public function getBookingunits(): int
     {
-        return $this->unidades;
+        return $this->bookingunits;
     }
 
-    public function setUnidades(int $unidades): Reserva
+    public function setBookingunits(int $bookingunits): void
     {
-        $this->unidades = $unidades;
-        return $this;
+        $this->bookingunits = $bookingunits;
     }
 
-    public function getCoste(): float
+    public function getBookingcost(): float
     {
-        return $this->coste;
+        return $this->bookingcost;
     }
 
-    public function setCoste(float $coste): Reserva
+    public function setBookingcost(float $bookingcost): void
     {
-        $this->coste = $coste;
-        return $this;
+        $this->bookingcost = $bookingcost;
     }
 
-    public function getCliente(): Cliente
+    public function getClientcode(): \App\Class\Cliente
     {
-        return $this->cliente;
+        return $this->clientcode;
     }
 
-    public function setCliente(Cliente $cliente): Reserva
+    public function setClientcode(\App\Class\Cliente $clientcode): void
     {
-        $this->cliente = $cliente;
-        return $this;
+        $this->clientcode = $clientcode;
     }
 
-    public function getMetodoPago(): MetodoPago
+    public function getBookingpaymethod(): MetodoPago
     {
-        return $this->metodoPago;
+        return $this->bookingpaymethod;
     }
 
-    public function setMetodoPago(MetodoPago $metodoPago): Reserva
+    public function setBookingpaymethod(MetodoPago $bookingpaymethod): void
     {
-        $this->metodoPago = $metodoPago;
-        return $this;
+        $this->bookingpaymethod = $bookingpaymethod;
     }
 
-    public function getNumCambios(): int
+    public function getBookingchanges(): int
     {
-        return $this->numCambios;
+        return $this->bookingchanges;
     }
 
-    public function setNumCambios(int $numCambios): Reserva
+    public function setBookingchanges(int $bookingchanges): void
     {
-        $this->numCambios = $numCambios;
-        return $this;
+        $this->bookingchanges = $bookingchanges;
     }
+    public static function crearReservaAPartirDeUnArray(array $datosReserva):Reserva{
 
-//Métodos generados por el programador
-
-    public function ModificarReserva():bool{
-
-            return false;
+        $reserva = new Reserva();
+        $reserva->setBookinguuid($datosReserva['bookinguuid']??Uuid::uuid4());
+        $reserva->setBookingdate(DateTime::createFromFormat('d/m/Y',$datosReserva['bookingdate']));
+        $reserva->setBookingunits($datosReserva['bookingunits']??0);
+        $reserva->setBookingcost($datosReserva['bookingcost']??0.0);
+        //(No se si hay que ponerlo)$reserva->setClientcode($datosReserva['clientcode']??);
+        $reserva->setBookingpaymethod(MetodoPago::convertirStringAMetodoPago(
+            $datosUsuario['usertype']??null)??MetodoPago::CARD
+        );
+        return $reserva;
     }
-
-
 }
