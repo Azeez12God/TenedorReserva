@@ -28,8 +28,8 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
                             <input class="form-control" id="bookingunits" name="bookingunits" type="number">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="name">Método de pago</label>
-                            <select>
+                            <label class="form-label" for="bookingpaymethod">Método de pago</label>
+                            <select class="form-control" id="bookingpaymethod" name="bookingpaymethod">
                                 <option>PayPal</option>
                                 <option>Apple Pay</option>
                                 <option>Google Pay</option>
