@@ -16,12 +16,12 @@ enum MetodoPago
             return null;
         }else{
             return match($tipo){
-                "paypal"=>MetodoPago::PAYPAL,
-                "apple_pay"=>MetodoPago::APPLE_PAY,
-                "google_pay"=>MetodoPago::GOOGLE_PAY,
-                "card"=>MetodoPago::CARD,
-                "bizum"=>MetodoPago::BIZUM,
-                "default"=>null
+                "PAYPAL"=>MetodoPago::PAYPAL,
+                "APPLE_PAY"=>MetodoPago::APPLE_PAY,
+                "GOOGLE_PAY"=>MetodoPago::GOOGLE_PAY,
+                "CARD"=>MetodoPago::CARD,
+                "BIZUM"=>MetodoPago::BIZUM,
+                "DEFAULT"=>null
             };
         }
     }

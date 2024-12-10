@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Class\Reserva;
 use App\Controller\InterfaceController;
+use App\Excepcions\ReadBookingException;
+use App\Model\ReservaModel;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator;
 
@@ -79,7 +81,26 @@ class ReservasController implements InterfaceController
 
     //GET /bookings/{id_reserva}
     public function show($id, $api){
-        echo "Mostar los datos de la reserva $id";
+        try{
+            $reserva=ReservaModel::leerReserva($id);
+            if ($api){
+                http_response_code(200);
+                header('Content-Type: application/json');
+                echo json_encode($reserva);
+            }
+        }catch(ReadBookingException $e){
+            if($api){
+                http_response_code(400);
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "mensaje"=>"La reserva no se ha podido leer"
+                ]);
+            }else{
+                $errores[]=$e->getMessage();
+                include_once DIRECTORIO_VISTAS."errores.php";
+            }
+
+        }
     }
 
 

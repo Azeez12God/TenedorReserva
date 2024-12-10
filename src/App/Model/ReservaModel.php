@@ -51,7 +51,7 @@ class ReservaModel
         //Crear una variable con la sentencia SQL que queremos ejecutar
         $sql = "SELECT bookinguuid,DATE_FORMAT(bookingdate,'%d/%m/%Y') as bookingdate,
         useruuid,bookingunits,bookingcost,clientcode,bookingpaymethod,bookingchanges 
-        FROM booking where useruuid=:uuid";
+        FROM booking where bookinguuid=:uuid";
 
         //Preparar la sentencia a ejecutar
         $sentenciaPreparada=$conexion->prepare($sql);
