@@ -22,7 +22,7 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
                         <input type="hidden" name="useruuid" value="<?=$id?>">
                         <div class="mb-3">
                             <label class="form-label" for="bookingdate">Fecha de la reserva</label>
-                            <input class="form-control" id="bookingdate" name="bookingdate" type="text" placeholder="DD/MM/YYYY" value="<?=$reserva->getBookingdate()?>">
+                            <input class="form-control" id="bookingdate" name="bookingdate" type="text" placeholder="DD/MM/YYYY" value="<?=$reserva->getBookingdate()->format('d/m/Y')?>">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="bookingunits">Cantidad de personas</label>
@@ -30,12 +30,13 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="bookingpaymethod">Método de pago</label>
-                            <select class="form-control" id="bookingpaymethod" name="bookingpaymethod" value="<?=$reserva->getBookingpaymethod()?>">
-                                <option value="PAYPAL">PayPal</option>
-                                <option value="APPLE_PAY">Apple Pay</option>
-                                <option value="GOOGLE_PAY">Google Pay</option>
-                                <option VALUE="CARD">Tarjeta de crédito</option>
-                                <option value="BIZUM">Bizum</option>
+                            <?php $selectedPayMethod = $reserva->getBookingpaymethod()->name; ?>
+                            <select class="form-control" id="bookingpaymethod" name="bookingpaymethod">
+                                <option value="PAYPAL" <?= $selectedPayMethod === "PAYPAL" ? 'selected' : '' ?>>PayPal</option>
+                                <option value="APPLE_PAY" <?= $selectedPayMethod === "APPLE_PAY" ? 'selected' : '' ?>>Apple Pay</option>
+                                <option value="GOOGLE_PAY" <?= $selectedPayMethod === "GOOGLE_PAY" ? 'selected' : '' ?>>Google Pay</option>
+                                <option value="CARD" <?= $selectedPayMethod === "CARD" ? 'selected' : '' ?>>Tarjeta de crédito</option>
+                                <option value="BIZUM" <?= $selectedPayMethod === "BIZUM" ? 'selected' : '' ?>>Bizum</option>
                             </select>
                         </div>
                         <input class="btn btn-brand ms-lg-3" value="Enviar" type="submit">
