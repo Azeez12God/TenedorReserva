@@ -30,11 +30,11 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
                         <div class="mb-3">
                             <label class="form-label" for="bookingpaymethod">Método de pago</label>
                             <select class="form-control" id="bookingpaymethod" name="bookingpaymethod">
-                                <option>PayPal</option>
-                                <option>Apple Pay</option>
-                                <option>Google Pay</option>
-                                <option>Tarjeta de crédito</option>
-                                <option>Bizum</option>
+                                <option value="paypal">PayPal</option>
+                                <option value="apple_pay">Apple Pay</option>
+                                <option value="google_pay">Google Pay</option>
+                                <option VALUE="card">Tarjeta de crédito</option>
+                                <option value="bizum">Bizum</option>
                             </select>
                         </div>
                         <input class="btn btn-brand ms-lg-3" value="Enviar" type="submit">

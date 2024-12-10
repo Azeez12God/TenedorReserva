@@ -93,9 +93,10 @@ class Reserva
         return $this->bookingpaymethod;
     }
 
-    public function setBookingpaymethod(MetodoPago $bookingpaymethod): void
+    public function setBookingpaymethod(MetodoPago $bookingpaymethod): Reserva
     {
         $this->bookingpaymethod = $bookingpaymethod;
+        return $this;
     }
 
     public function getBookingchanges(): int
@@ -116,7 +117,7 @@ class Reserva
         //$reserva->setBookingcost($datosReserva['bookingcost']??0.0);
         //(No se si hay que ponerlo)$reserva->setClientcode($datosReserva['clientcode']??);
         $reserva->setBookingpaymethod(MetodoPago::convertirStringAMetodoPago(
-            $datosUsuario['usertype']??null)??MetodoPago::CARD
+            $datosReserva['bookingpaymethod']??null)??MetodoPago::CARD
         );
         return $reserva;
     }

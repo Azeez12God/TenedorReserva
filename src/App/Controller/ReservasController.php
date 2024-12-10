@@ -27,7 +27,7 @@ class ReservasController implements InterfaceController
 
             Validator::key('bookingdate', Validator::date('d/m/Y'))
                 ->key('bookingunits', Validator::intType()->min(1)->max(99))
-                //->key('bookingcost', Validator::floatType()->min(10)->max(50000))
+                ->key('bookingcost', Validator::floatType()->min(10)->max(50000))
                 ->key('bookingpaymethod', Validator::notEmpty())
                 ->assert($_POST);
 
