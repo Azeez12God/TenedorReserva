@@ -2,6 +2,7 @@
 
 namespace App\Model;
 use App\Class\Reserva;
+use App\Excepcions\ReadBookingException;
 use PDO;
 use PDOException;
 
@@ -42,4 +43,40 @@ class ReservaModel
         $sentenciaPreparada->bindValue(":clientcode", 0);
         $sentenciaPreparada->execute();
     }
+
+    public static function leerReserva($bookinguuid):?Reserva{
+        //Crear una conexión con la base de datos
+        $conexion = ReservaModel::conectarBD();
+
+        //Crear una variable con la sentencia SQL que queremos ejecutar
+        $sql = "SELECT bookinguuid,DATE_FORMAT(bookingdate,'%d/%m/%Y') as bookingdate,
+        useruuid,bookingunits,bookingcost,clientcode,bookingpaymethod,bookingchanges 
+        FROM booking where useruuid=:uuid";
+
+        //Preparar la sentencia a ejecutar
+        $sentenciaPreparada=$conexion->prepare($sql);
+
+        //Hacer la asignación de los parametros de la SQL al valor
+        $sentenciaPreparada->bindValue('uuid',$bookinguuid);
+
+        //Ejecutar la consulta con los parametros ya cambiados en la base de datos
+        $sentenciaPreparada->execute();
+
+        if($sentenciaPreparada->rowCount()===0){
+            //Se ha producido un error
+            throw new ReadBookingException();
+        }else{
+            //Leer de la base datos un usuario
+            $datosReserva = $sentenciaPreparada->fetch(PDO::FETCH_ASSOC);
+
+            /*(No tenemos aún la tabla client)
+            $sqlclientcode = "SELECT clientcode FROM client WHERE useruuid=?";
+            $sentenciaCodigoCliente = $conexion->prepare($sqlclientcode);
+            $sentenciaCodigoCliente->execute([$bookinguuid]);
+            */
+
+            $reserva=Reserva::crearReservaAPartirDeUnArray($datosReserva);
+            return $reserva;
+        }
+}
 }
