@@ -65,8 +65,15 @@ class ReservasController implements InterfaceController
 
     //GET /bookings/{id_reserva}/edit
     public function edit($id, $api){
-        //Mostraría un formulario con los datos del usuario
-        echo "Formulario para editar los datos de la reserva $id";
+        //Comprobar que el usuario exista y cargar los datos
+        $reserva=ReservaModel::leerReserva($id);
+        if (!$reserva){
+            $errores[]="Usuario no encontrado";
+            include_once DIRECTORIO_VISTAS."errores.php";
+            exit();
+        }else{
+            include_once DIRECTORIO_VISTAS."Booking/editBooking.php";
+        }
 
     }
 
