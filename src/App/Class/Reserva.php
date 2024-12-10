@@ -5,7 +5,9 @@ namespace App\Class;
 use App\Class\Cliente;
 use App\Class\Enum\MetodoPago;
 use App\Class\Usuario;
+use App\Model\ReservaModel;
 use DateTime;
+use Ramsey\Uuid\Uuid;
 
 class Reserva
 {
@@ -107,15 +109,21 @@ class Reserva
     }
     public static function crearReservaAPartirDeUnArray(array $datosReserva):Reserva{
 
-        $reserva = new Reserva();
+        $reserva = new Reserva(Uuid::uuid4());
         $reserva->setBookinguuid($datosReserva['bookinguuid']??Uuid::uuid4());
         $reserva->setBookingdate(DateTime::createFromFormat('d/m/Y',$datosReserva['bookingdate']));
         $reserva->setBookingunits($datosReserva['bookingunits']??0);
-        $reserva->setBookingcost($datosReserva['bookingcost']??0.0);
+        //$reserva->setBookingcost($datosReserva['bookingcost']??0.0);
         //(No se si hay que ponerlo)$reserva->setClientcode($datosReserva['clientcode']??);
         $reserva->setBookingpaymethod(MetodoPago::convertirStringAMetodoPago(
             $datosUsuario['usertype']??null)??MetodoPago::CARD
         );
         return $reserva;
+    }
+
+    public function save():Reserva
+    {
+        ReservaModel::guardarReserva($this);
+        return $this;
     }
 }

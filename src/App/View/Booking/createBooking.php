@@ -18,10 +18,10 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
             </div>
             <div class="col-lg-12 col-md-8 h-100">
                 <div class="service">
-                    <form method="post" action="/reserdawtions">
+                    <form method="post" action="/bookings">
                         <div class="mb-3">
                             <label class="form-label" for="bookingdate">Fecha de la reserva</label>
-                            <input class="form-control" id="bookingdate" name="bookingdate" type="text">
+                            <input class="form-control" id="bookingdate" name="bookingdate" type="text" placeholder="DD/MM/YYYY">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="bookingunits">Cantidad de personas</label>

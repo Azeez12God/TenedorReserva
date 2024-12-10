@@ -22,23 +22,24 @@ class ReservaModel
         return null;
     }
 
-    private static function guardarReserva(Reserva $reserva){
+    public static function guardarReserva(Reserva $reserva){
         $conexion = ReservaModel::conectarBD();
 
         $sql = "INSERT INTO booking(bookinguuid, useruuid,bookingdate,bookingunits,bookingcost,
             clientcode, bookingpaymethod, bookingchanges) 
-            values (:bookinguuid, :useruuid, :bookingdate, :bookingunits, :bookingcost,:clientcode,:bookingpaymethod,:bookingchanges)";
+            values (:bookinguuid, :useruuid,STR_TO_DATE(:bookingdate, '%d/%m/%Y'), :bookingunits, :bookingcost,:clientcode,:bookingpaymethod,:bookingchanges)";
 
         $sentenciaPreparada = $conexion->prepare($sql);
 
 
-        $sentenciaPreparada->bindValue("bookinguuid", $reserva->getBookingUuid());
-        $sentenciaPreparada->bindValue(":bookingdate", $reserva->getBookingDate());
+        $sentenciaPreparada->bindValue(":bookinguuid", $reserva->getBookingUuid());
+        $sentenciaPreparada->bindValue(":bookingdate", $reserva->getBookingDate()->format('d/m/Y'));
         $sentenciaPreparada->bindValue(":bookingunits", $reserva->getBookingUnits());
-        $sentenciaPreparada->bindValue(":bookingpaymethod", $reserva->getBookingPayMethod());
-        $sentenciaPreparada->bindValue(":bookingchanges", $reserva->getBookingChanges());
+        $sentenciaPreparada->bindValue(":bookingcost", 0.0);
+        $sentenciaPreparada->bindValue(":bookingpaymethod", $reserva->getBookingPayMethod()->name);
+        $sentenciaPreparada->bindValue(":bookingchanges", 0 );
         $sentenciaPreparada->bindValue(":useruuid", $_SESSION["useruuid"]);
-        $sentenciaPreparada->bindValue(":clientcolde", 0);
+        $sentenciaPreparada->bindValue(":clientcode", 0);
         $sentenciaPreparada->execute();
     }
 }

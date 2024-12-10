@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\Reserva;
 use App\Controller\InterfaceController;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator;
@@ -26,7 +27,7 @@ class ReservasController implements InterfaceController
 
             Validator::key('bookingdate', Validator::date('d/m/Y'))
                 ->key('bookingunits', Validator::intType()->min(1)->max(99))
-                ->key('bookingcost', Validator::floatType()->min(10)->max(50000))
+                //->key('bookingcost', Validator::floatType()->min(10)->max(50000))
                 ->key('bookingpaymethod', Validator::notEmpty())
                 ->assert($_POST);
 
@@ -35,17 +36,28 @@ class ReservasController implements InterfaceController
         }
 
         //Comprobamos si ha habido errores
-        if (is_array($errores)){
+        /*if (is_array($errores)){
             include_once __DIR__."/../View/Booking/errorBooking.php";
         }else{
-            //TODO no se que coño hay que poner aqui, un saludo
-            //$usuario=Usuario::crearUsuarioAPartirDeUnArray($_POST);
+            $reserva=Reserva::crearReservaAPartirDeUnArray($_POST);
+            $reserva->save();
+        }*/
+
+        $reserva=Reserva::crearReservaAPartirDeUnArray($_POST);
+        $reserva->save();
+
+
+        if ($api){
+            http_response_code(201);
+            header('Content-Type: application/json');
+            echo json_encode($reserva);
+        }else{
+            $informacion=['Ha habido un error.'];
+
+            // De momento no hay session
+
+            include_once DIRECTORIO_VISTAS."informacion.php";
         }
-
-        //Guardamos el usuario
-        //$usuario->save();
-
-        //TODO Creación del booking
 
     }
 
