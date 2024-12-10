@@ -6,6 +6,7 @@ use App\Class\Cliente;
 use App\Class\Enum\MetodoPago;
 use App\Class\Usuario;
 use App\Model\ReservaModel;
+use App\Model\UsuarioModel;
 use DateTime;
 use Ramsey\Uuid\Uuid;
 
@@ -127,4 +128,9 @@ class Reserva
         ReservaModel::guardarReserva($this);
         return $this;
     }
+
+    public function delete(){
+        ReservaModel::borrarReserva($this);
+    }
+
 }
