@@ -111,17 +111,18 @@ class ReservasController implements InterfaceController
             $reserva->setBookingdate(\DateTime::createFromFormat('d/m/Y',$datos_put_para_editar['bookingdate']));
         }
         $reserva->setBookingunits($datos_put_para_editar['bookingunits']??$reserva->getBookingunits());
-        $reserva->setBookingcost($datos_put_para_editar['bookingcost']??$reserva->getBookingcost());
+        //$reserva->setBookingcost($datos_put_para_editar['bookingcost']??$reserva->getBookingcost());
         /* Como no tenemos cliente va a dar error
         $reserva->setClientcode($datos_put_para_editar['clientcode']??$reserva->getClientcode());
         */
         $reserva->setBookingpaymethod($datos_put_para_editar['bookingpaymethod']??$reserva->getBookingpaymethod());
-        $reserva->setBookingchanges($datos_put_para_editar['bookingchanges']??$reserva->getBookingchanges());
+        //$reserva->setBookingchanges($datos_put_para_editar['bookingchanges']??$reserva->getBookingchanges());
 
 
         //Almacenar los cambios en la base de datos
         try{
             //UsuarioModel::editarUsuario($usuario);
+            ReservaModel::
             $reserva->edit();
             if ($api){
                 http_response_code(200);

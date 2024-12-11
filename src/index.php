@@ -172,8 +172,8 @@ $router->addRoute("post","/modificarreserva",function(){
 
     curl_close($curl);
     if ($response==''){
-        header('Location: /bookings/'.$_POST['bookinguuid']."/edit");
-        exit();
+        $informacion=['Reserva modificada correctamente'];
+        include_once DIRECTORIO_VISTAS."informacion.php";
     }
 });
 
