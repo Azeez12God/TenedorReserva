@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Class\Reserva;
 use App\Controller\InterfaceController;
+use App\Excepcions\EditBookingException;
 use App\Excepcions\ReadBookingException;
 use App\Model\ReservaModel;
 use Respect\Validation\Exceptions\NestedValidationException;
@@ -82,7 +83,67 @@ class ReservasController implements InterfaceController
     //PUT /bookings/{id_reserva}
     public function update($id, $api){
         //Guardaría los datos modificados del usuario
-        echo "Función para actualizar los datos en la BD de la reserva $id";
+        $reserva = ReservaModel::leerReserva($id);
+
+        //Leer de un ficheros de datos los valore de PUT
+        //No existe $_PUT
+        parse_str(file_get_contents("php://input"),$datos_put_para_editar);
+
+        //Filtraremos esos datos
+        try {
+
+            Validator::key('bookingdate', Validator::optional(Validator::date('d/m/Y')),false)
+                ->key('bookingunits', Validator::optional(Validator::intType()->notEmpty()->max(999)),false)
+                ->key('bookingcost', Validator::optional(Validator::floatType()),false)
+                ->key('clientcode', Validator::optional(Validator::stringType()),false)
+                ->key('bookingpaymethod', Validator::optional(Validator::stringType()),false)
+                ->key('bookingchanges', Validator::optional(Validator::intType()),false)
+                ->assert($datos_put_para_editar);
+
+        } catch (NestedValidationException $exception) {
+            $errores=$exception->getMessages();
+        }
+
+        //Los datos no tienen errores
+
+        //Comprobación para transformar la fecha de string a DateTime
+        if(isset($datos_put_para_editar['bookingdate'])){
+            $reserva->setBookingdate(\DateTime::createFromFormat('d/m/Y',$datos_put_para_editar['bookingdate']));
+        }
+        $reserva->setBookingunits($datos_put_para_editar['bookingunits']??$reserva->getBookingunits());
+        $reserva->setBookingcost($datos_put_para_editar['bookingcost']??$reserva->getBookingcost());
+        /* Como no tenemos cliente va a dar error
+        $reserva->setClientcode($datos_put_para_editar['clientcode']??$reserva->getClientcode());
+        */
+        $reserva->setBookingpaymethod($datos_put_para_editar['bookingpaymethod']??$reserva->getBookingpaymethod());
+        $reserva->setBookingchanges($datos_put_para_editar['bookingchanges']??$reserva->getBookingchanges());
+
+
+        //Almacenar los cambios en la base de datos
+        try{
+            //UsuarioModel::editarUsuario($usuario);
+            $reserva->edit();
+            if ($api){
+                http_response_code(200);
+                header('Content-Type: application/json');
+                echo json_encode($reserva);
+            }else{
+                return true;
+            }
+
+
+        }catch (EditBookingException $e){
+            if ($api){
+                http_response_code(404);
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "mensaje"=>'No se ha podido modificar la reserva'
+                ]);
+            }else{
+                $e->getMessage();
+            }
+
+        }
 
     }
 
