@@ -177,4 +177,17 @@ $router->addRoute("post","/modificarreserva",function(){
     }
 });
 
+$router->addRoute('get','/borrarreserva',function(){
+
+    $client = new \GuzzleHttp\Client();
+    $request = new \GuzzleHttp\Psr7\Request('DELETE', 'http://localhost/bookings/'.$_SESSION['bookinguuid']);
+    $res = $client->sendAsync($request)->wait();
+
+    unset($_SESSION['bookinguuid']);
+    session_destroy();
+    header("Location: /");
+    exit();
+
+});
+
 $router->resolver($_SERVER['REQUEST_METHOD'],$_SERVER['REQUEST_URI']);
