@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Class\Reserva;
 use App\Controller\InterfaceController;
+use App\Excepcions\DeleteBookingException;
+use App\Excepcions\DeleteUserException;
 use App\Excepcions\EditBookingException;
 use App\Excepcions\ReadBookingException;
 use App\Model\ReservaModel;
+use App\Model\UsuarioModel;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator;
 
@@ -176,6 +179,27 @@ class ReservasController implements InterfaceController
 
     //DELETE /bookings/{id_reserva}
     public function destroy($id, $api){
-        echo "Función para borrar los datos de la reserva $id";
+        try {
+            ReservaModel::borrarReserva($id);
+            //Si api==false
+            if ($api){
+                http_response_code(200);
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "mensaje"=>"La reserva ha sido eliminada correctamente."
+                ]);
+            }
+            return true;
+        }catch (DeleteBookingException $e){
+            if($api){
+                http_response_code(400);
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "mensaje"=>"La reserva NO ha sido borrada."
+                ]);
+            }
+            $errores[]=$e->getMessage();
+            include_once DIRECTORIO_VISTAS."errores.php";
+        }
     }
 }
