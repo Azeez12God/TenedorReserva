@@ -72,6 +72,7 @@ class ReservasController implements InterfaceController
             include_once DIRECTORIO_VISTAS."errores.php";
             exit();
         }else{
+            $_SESSION["bookinguuid"] = $reserva->getBookinguuid();
             include_once DIRECTORIO_VISTAS."Booking/editBooking.php";
         }
 
