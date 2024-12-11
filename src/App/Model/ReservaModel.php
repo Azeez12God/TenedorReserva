@@ -3,6 +3,7 @@
 namespace App\Model;
 use App\Class\Reserva;
 use App\Excepcions\EditBookingException;
+use App\Excepcions\DeleteBookingException;
 use App\Excepcions\ReadBookingException;
 use PDO;
 use PDOException;
@@ -103,5 +104,21 @@ class ReservaModel
         }else{
             return $reserva;
         }
+      
+    public static function borrarReserva(string $bookinguuid):bool
+    {
+       $conexion = ReservaModel::conectarBD();
+
+       $sql = "DELETE FROM booking where bookinguuid=?";
+
+       $sentenciaPreparada=$conexion->prepare($sql);
+       $sentenciaPreparada->bindValue(1,$bookinguuid);
+       $sentenciaPreparada->execute();
+
+       if($sentenciaPreparada->rowCount()===0){
+           throw new DeleteBookingException();
+       }else{
+           return true;
+       }
     }
 }
