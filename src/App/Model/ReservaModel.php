@@ -82,28 +82,30 @@ class ReservaModel
         }
     }
 
-    public static function editarReserva(Reserva $reserva):?Reserva{
+    public static function editarReserva(Reserva $reserva):?Reserva
+    {
         //Creamos la conexión a la base de datos
-        $conexion =ReservaModel::conectarBD();
+        $conexion = ReservaModel::conectarBD();
 
-        $sql="UPDATE booking SET bookingdate=STR_TO_DATE(:bookingdate,'%d/%m/%Y'),
+        $sql = "UPDATE booking SET bookingdate=STR_TO_DATE(:bookingdate,'%d/%m/%Y'),
                      bookingunits=:bookingunits,
                      bookingpaymethod=:bookingpaymethod
                      WHERE bookinguuid=:bookinguuid";
 
-        $sentenciaPreparada=$conexion->prepare($sql);
+        $sentenciaPreparada = $conexion->prepare($sql);
 
-        $sentenciaPreparada->bindValue("bookingdate",$reserva->getBookingdate()->format('d/m/Y'));
-        $sentenciaPreparada->bindValue("bookingunits",$reserva->getBookingunits());
-        $sentenciaPreparada->bindValue("bookingpaymethod",$reserva->getBookingpaymethod());
+        $sentenciaPreparada->bindValue("bookingdate", $reserva->getBookingdate()->format('d/m/Y'));
+        $sentenciaPreparada->bindValue("bookingunits", $reserva->getBookingunits());
+        $sentenciaPreparada->bindValue("bookingpaymethod", $reserva->getBookingpaymethod());
 
         $sentenciaPreparada->execute();
 
-        if ($sentenciaPreparada->rowCount()==0){
+        if ($sentenciaPreparada->rowCount() == 0) {
             throw new EditBookingException();
-        }else{
+        } else {
             return $reserva;
         }
+    }
       
     public static function borrarReserva(string $bookinguuid):bool
     {
