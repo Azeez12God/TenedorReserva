@@ -147,4 +147,34 @@ $router->addRoute('put','/bookings/{id}',[\App\Controller\ReservasController::cl
 $router->addRoute('get','/bookings/{id}',[\App\Controller\ReservasController::class,'show']);
 $router->addRoute('delete','/bookings/{id}',[\App\Controller\ReservasController::class,'destroy']);
 
+$router->addRoute("post","/modificarreserva",function(){
+    //Tomar los datos de post y realizar la petición PUT
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'http://localhost/bookings/'.$_POST['bookinguuid'],
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => 'bookingdate='.$_POST['bookingdate'].
+            '&bookingunits='.$_POST['bookingunits'].
+            '&bookingpaymethod='.$_POST['bookingpaymethod'],
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/x-www-form-urlencoded'
+        ),
+    ));
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    if ($response==''){
+        header('Location: /bookings/'.$_POST['bookinguuid']."/edit");
+        exit();
+    }
+});
+
 $router->resolver($_SERVER['REQUEST_METHOD'],$_SERVER['REQUEST_URI']);
