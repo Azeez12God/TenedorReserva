@@ -127,4 +127,9 @@ class Reserva
         ReservaModel::guardarReserva($this);
         return $this;
     }
+
+    public function edit():Reserva{
+        ReservaModel::editarReserva($this);
+        return $this;
+    }
 }

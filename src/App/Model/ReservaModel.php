@@ -2,6 +2,7 @@
 
 namespace App\Model;
 use App\Class\Reserva;
+use App\Excepcions\EditBookingException;
 use App\Excepcions\ReadBookingException;
 use PDO;
 use PDOException;
@@ -78,5 +79,29 @@ class ReservaModel
             $reserva=Reserva::crearReservaAPartirDeUnArray($datosReserva);
             return $reserva;
         }
-}
+    }
+
+    public static function editarReserva(Reserva $reserva):?Reserva{
+        //Creamos la conexión a la base de datos
+        $conexion =ReservaModel::conectarBD();
+
+        $sql="UPDATE booking SET bookingdate=STR_TO_DATE(:bookingdate,'%d/%m/%Y'),
+                     bookingunits=:bookingunits,
+                     bookingpaymethod=:bookingpaymethod
+                     WHERE bookinguuid=:bookinguuid";
+
+        $sentenciaPreparada=$conexion->prepare($sql);
+
+        $sentenciaPreparada->bindValue("bookingdate",$reserva->getBookingdate()->format('d/m/Y'));
+        $sentenciaPreparada->bindValue("bookingunits",$reserva->getBookingunits());
+        $sentenciaPreparada->bindValue("bookingpaymethod",$reserva->getBookingpaymethod());
+
+        $sentenciaPreparada->execute();
+
+        if ($sentenciaPreparada->rowCount()==0){
+            throw new EditBookingException();
+        }else{
+            return $reserva;
+        }
+    }
 }
