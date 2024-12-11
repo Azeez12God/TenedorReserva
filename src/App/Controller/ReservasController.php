@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\Enum\MetodoPago;
 use App\Class\Reserva;
 use App\Controller\InterfaceController;
 use App\Excepcions\DeleteBookingException;
@@ -97,10 +98,10 @@ class ReservasController implements InterfaceController
 
             Validator::key('bookingdate', Validator::optional(Validator::date('d/m/Y')),false)
                 ->key('bookingunits', Validator::optional(Validator::intType()->notEmpty()->max(999)),false)
-                ->key('bookingcost', Validator::optional(Validator::floatType()),false)
-                ->key('clientcode', Validator::optional(Validator::stringType()),false)
+                //->key('bookingcost', Validator::optional(Validator::floatType()),false)
+                //->key('clientcode', Validator::optional(Validator::stringType()),false)
                 ->key('bookingpaymethod', Validator::optional(Validator::stringType()),false)
-                ->key('bookingchanges', Validator::optional(Validator::intType()),false)
+                //->key('bookingchanges', Validator::optional(Validator::intType()),false)
                 ->assert($datos_put_para_editar);
 
         } catch (NestedValidationException $exception) {
@@ -118,7 +119,9 @@ class ReservasController implements InterfaceController
         /* Como no tenemos cliente va a dar error
         $reserva->setClientcode($datos_put_para_editar['clientcode']??$reserva->getClientcode());
         */
-        $reserva->setBookingpaymethod($datos_put_para_editar['bookingpaymethod']??$reserva->getBookingpaymethod());
+        if (isset($datos_put_para_editar['bookingpaymethod'])) {
+            $reserva->setBookingpaymethod(MetodoPago::convertirStringAMetodoPago($datos_put_para_editar['bookingpaymethod']));
+        }
         //$reserva->setBookingchanges($datos_put_para_editar['bookingchanges']??$reserva->getBookingchanges());
 
 

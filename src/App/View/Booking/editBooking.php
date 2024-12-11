@@ -20,7 +20,6 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
                 <div class="service">
                     <form method="post" action="/modificarreserva">
                         <input type="hidden" name="bookinguuid" value="<?=$id?>">
-                        <?=var_dump($reserva)?>
                         <div class="mb-3">
                             <label class="form-label" for="bookingdate">Fecha de la reserva</label>
                             <input class="form-control" id="bookingdate" name="bookingdate" type="text" placeholder="DD/MM/YYYY" value="<?=$reserva->getBookingdate()->format('d/m/Y')?>">

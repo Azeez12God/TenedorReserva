@@ -96,7 +96,8 @@ class ReservaModel
 
         $sentenciaPreparada->bindValue("bookingdate", $reserva->getBookingdate()->format('d/m/Y'));
         $sentenciaPreparada->bindValue("bookingunits", $reserva->getBookingunits());
-        $sentenciaPreparada->bindValue("bookingpaymethod", $reserva->getBookingpaymethod());
+        $sentenciaPreparada->bindValue("bookingpaymethod", $reserva->getBookingpaymethod()->name);
+        $sentenciaPreparada->bindValue("bookinguuid", $reserva->getBookinguuid());
 
         $sentenciaPreparada->execute();
 

@@ -175,6 +175,12 @@ $router->addRoute("post","/modificarreserva",function(){
         $informacion=['Reserva modificada correctamente'];
         include_once DIRECTORIO_VISTAS."informacion.php";
     }
+
+    else{
+        var_dump($_POST);
+        $informacion=['No se ha podido modificar.'];
+        include_once DIRECTORIO_VISTAS."informacion.php";
+    }
 });
 
 $router->addRoute('get','/borrarreserva',function(){
