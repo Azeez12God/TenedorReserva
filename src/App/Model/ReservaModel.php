@@ -124,4 +124,12 @@ class ReservaModel
            return true;
        }
     }
+
+    public static function obtenerReservas(): array {
+        $conexion = self::conectarBD();
+        $sql = "SELECT bookinguuid, bookingdate, bookingunits, bookingpaymethod FROM booking";
+        $sentenciaPreparada = $conexion->prepare($sql);
+        $sentenciaPreparada->execute();
+        return $sentenciaPreparada->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

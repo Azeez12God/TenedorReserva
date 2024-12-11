@@ -18,7 +18,14 @@ class ReservasController implements InterfaceController
 {
     //GET /bookings
     public function index($api){
-        include_once  __DIR__ . "/../View/Booking/indexBooking.php";
+        $reservas = ReservaModel::obtenerReservas();
+        if ($api){
+            http_response_code(200);
+            header('Content-Type: application/json');
+            echo json_encode($reservas);
+        }else{
+            include_once DIRECTORIO_VISTAS."Booking/indexBooking.php";
+        }
     }
 
     //GET /bookings/create
@@ -161,6 +168,9 @@ class ReservasController implements InterfaceController
                 http_response_code(200);
                 header('Content-Type: application/json');
                 echo json_encode($reserva);
+            }
+            else{
+                include_once DIRECTORIO_VISTAS."Booking/editBooking.php";
             }
         }catch(ReadBookingException $e){
             if($api){

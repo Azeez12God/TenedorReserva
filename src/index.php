@@ -177,7 +177,6 @@ $router->addRoute("post","/modificarreserva",function(){
     }
 
     else{
-        var_dump($_POST);
         $informacion=['No se ha podido modificar.'];
         include_once DIRECTORIO_VISTAS."informacion.php";
     }
