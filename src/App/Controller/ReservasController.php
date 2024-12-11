@@ -124,8 +124,6 @@ class ReservasController implements InterfaceController
 
         //Almacenar los cambios en la base de datos
         try{
-            //UsuarioModel::editarUsuario($usuario);
-            ReservaModel::
             $reserva->edit();
             if ($api){
                 http_response_code(200);
