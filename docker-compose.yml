@@ -45,6 +45,16 @@ services:
       - reserdawtions
     ports:
       - 11434:11434
+  mongo:
+    image: mongo
+    restart: on-failure
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+      - reserdawtions
+    ports:
+      - 27017:27017
 
 networks:
   reserdawtions:

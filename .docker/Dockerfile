@@ -38,6 +38,8 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
+RUN pecl install mongodb apcu && docker-php-ext-enable mongodb apcu
+
 COPY ./xdebug/debug.ini "${PHP_INI_DIR}/conf.d"
 
 COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/composer

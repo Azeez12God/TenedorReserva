@@ -106,6 +106,13 @@ $router->addRoute('get','/ia',function(){
     echo $response->message->content;
 });
 
+$router->addRoute('get','/mongo', function(){
+
+    $usuario= \App\Model\UsuarioModel::leerUsuario('0ceb27b1-6281-4b28-b3b3-ac7507ba7c00');
+    \App\Model\UsuarioModelMongo::guardarUsuario($usuario);
+
+});
+
 
 //Rutas enlazadas a controladores, lógica de la aplicación
 //Usuarios

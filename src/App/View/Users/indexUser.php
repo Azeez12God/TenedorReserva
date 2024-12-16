@@ -40,8 +40,13 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
     <div>
         <?php
          //Conocer página siguiente y página anterior
-        $query = $_SERVER['QUERY_STRING'];
-        $parampag = $query[-1];
+        if (isset($_SERVER['QUERY_STRING'])){
+            $query = $_SERVER['QUERY_STRING'];
+            $parampag = $query[-1];
+
+        }else{
+            $parampag=0;
+        }
         if($parampag==0){
             $anterior=0;
             $siguiente=1;
@@ -49,6 +54,8 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
             $anterior=$parampag-1;
             $siguiente=$parampag+1;
         }
+
+
         ?>
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
@@ -71,9 +78,9 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
                 }
                 for($i=0;$i<$paginas;$i++){
                     if ($i==$parampag){?>
-                        <li class="page-item active"><a class="page-link" href="/users?pag=<?=$i+1?>"><?=$i+1?></a></li>
+                        <li class="page-item active"><a class="page-link" href="/users?pag=<?=$i?>"><?=$i+1?></a></li>
                 <?php }else{ ?>
-                        <li class="page-item"><a class="page-link" href="/users?pag=<?=$i+1?>"><?=$i+1?></a></li>
+                        <li class="page-item"><a class="page-link" href="/users?pag=<?=$i?>"><?=$i+1?></a></li>
                 <?php }
                     }?>
 

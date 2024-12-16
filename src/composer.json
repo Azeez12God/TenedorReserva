@@ -16,7 +16,8 @@
         "nesbot/carbon": "^3.8.1",
       "ext-curl": "*",
         "guzzlehttp/guzzle": "^7.9",
-        "ardagnsrn/ollama-php": "^1.0"
+        "ardagnsrn/ollama-php": "^1.0",
+        "mongodb/mongodb": "^1.20"
     },
     "autoload": {
         "psr-4": {"App\\": "App/"}

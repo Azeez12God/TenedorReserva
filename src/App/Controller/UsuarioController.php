@@ -22,6 +22,8 @@ class UsuarioController implements InterfaceController
     public function index($api){
         if (isset($_GET['pag'])){
             $pag=$_GET['pag']-1;
+        }else{
+            $pag=0;
         }
         $usuarios= UsuarioModel::obtenerUsuarios(3,3*$pag);
         if ($api){
